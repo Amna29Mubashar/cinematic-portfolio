@@ -7,7 +7,9 @@ interface Project {
   title: string;
   category: string;
   description: string;
-  githubUrl: string;
+  link?: string;
+  linkLabel?: string;
+  note?: string;
   tech: string[];
   metrics: { label: string; value: string }[];
 }
@@ -15,97 +17,88 @@ interface Project {
 const projects: Project[] = [
   {
     number: '01',
-    title: 'PolicyGuard AI',
-    category: 'AI / LEGAL-TECH PLATFORM',
+    title: 'Ascended: Fitness Adventure',
+    category: 'RPG FITNESS GAME / iOS',
     description:
-      'AI-powered platform engineered for automated privacy policy analysis and legal contract auditing across web, desktop, and mobile. Implements NLP extraction, real-time risk alert detection, and generative risk score intelligence.',
-    githubUrl: 'https://github.com/lohithadamisetti123',
-    tech: [
-      'React.js',
-      'React Native',
-      'Electron.js',
-      'Node.js',
-      'Express.js',
-      'MongoDB Atlas',
-      'OpenAI API',
-      'Prompt Eng',
-      'NLP',
-      'Docker',
-      'JWT',
-    ],
+      'An RPG fitness game that turns real workouts into character progression, with Apple Health-synced training, custom hero creation, and story-driven missions.',
+    link: 'https://apps.apple.com/us/app/ascended-fitness-rpg/id6755092670',
+    linkLabel: 'VIEW ON APP STORE',
+    tech: ['Swift', 'SwiftUI', 'Apple HealthKit', 'RevenueCat', 'MapKit'],
     metrics: [
-      { label: 'PLATFORMS', value: 'Web, Mobile, Desktop' },
-      { label: 'ENGINE', value: 'OpenAI NLP / GPT' },
-      { label: 'PIPELINE', value: 'Automated Scoring' },
+      { label: 'DESIGN', value: 'Full Game Design & Development' },
+      { label: 'INTEGRATION', value: 'Apple HealthKit Sync' },
+      { label: 'STATUS', value: 'Live on the App Store' },
     ],
   },
   {
     number: '02',
-    title: 'Software Release Risk Heatmap',
-    category: 'MACHINE LEARNING / DEV PLATFORM',
+    title: 'Expo Pass',
+    category: 'EVENT MANAGEMENT APP / iOS',
     description:
-      'Full-stack predictive release management platform utilizing Machine Learning. Implements a trained Random Forest classifier to categorize release stability from Low to Critical risk, rendered over a live interactive team heatmap.',
-    githubUrl: 'https://github.com/lohithadamisetti123',
-    tech: [
-      'React.js',
-      'TypeScript',
-      'Python',
-      'FastAPI',
-      'scikit-learn',
-      'PostgreSQL',
-      'Tailwind CSS',
-      'REST APIs',
-      'JWT',
-    ],
+      'Large-scale offline-first app for international events with tens of thousands of attendees. Designed a Realm-based persistence and sync system with Operation Queues for background sync and local-first UI; migrated networking to a custom URLSession/Codable layer; built QR check-in and badge generation.',
+    note: 'Available on the App Store',
+    tech: ['Swift', 'Realm', 'URLSession', 'Codable', 'Stripe SDK', 'AWS Amplify', 'Firebase', 'Firebase Crashlytics'],
     metrics: [
-      { label: 'MODEL', value: 'Random Forest' },
-      { label: 'ACCURACY', value: 'High Precision' },
-      { label: 'DASHBOARD', value: 'Live Risk Heatmap' },
+      { label: 'SCALE', value: '10,000s of Attendees' },
+      { label: 'ARCHITECTURE', value: 'Offline-First Sync' },
+      { label: 'CHECK-IN', value: 'QR + Badge Generation' },
     ],
   },
   {
     number: '03',
-    title: 'Multi-Tenant SaaS Platform',
-    category: 'CLOUD / DISTRIBUTED SYSTEM',
+    title: 'Re-wear',
+    category: 'P2P RESALE & RENTAL MARKETPLACE',
     description:
-      'Enterprise-grade multi-tenant platform built for unified management of teams, projects, and execution lifecycles. Architected with strict tenant data isolation, granular Role-Based Access Control (RBAC), and containerized deployments.',
-    githubUrl: 'https://github.com/lohithadamisetti123',
-    tech: [
-      'Node.js',
-      'Express.js',
-      'PostgreSQL',
-      'React',
-      'Docker',
-      'JWT',
-      'RBAC',
-      'REST APIs',
-    ],
+      'Built at UV Apps: users list clothing, jewelry, and shoes to sell or rent. Architected a conflict-safe booking system using PostgreSQL date-range exclusion constraints to guarantee zero double-bookings under concurrent requests, plus an append-only financial ledger for payments, deposits, and payouts.',
+    note: 'In Beta Testing',
+    tech: ['Flutter', 'Supabase', 'PostgreSQL'],
     metrics: [
-      { label: 'ARCHITECTURE', value: 'Multi-Tenant' },
-      { label: 'SECURITY', value: 'RBAC Isolation' },
-      { label: 'CONTAINERS', value: 'Docker Compose' },
+      { label: 'BOOKING', value: 'Zero Double-Booking Guarantee' },
+      { label: 'LEDGER', value: 'Append-Only Financial Records' },
+      { label: 'STUDIO', value: 'Built at UV Apps' },
     ],
   },
   {
     number: '04',
-    title: 'Payment Gateway with Hosted Checkout',
-    category: 'FINTECH / PAYMENT SYSTEMS',
+    title: 'HealHub',
+    category: 'HEALTH & WELLNESS APP / iOS',
     description:
-      'End-to-end hosted payment gateway infrastructure supporting seamless merchant order generation, multi-currency processing, and secure consumer checkout via UPI and Cards with webhook transaction verification.',
-    githubUrl: 'https://github.com/lohithadamisetti123',
-    tech: [
-      'Node.js',
-      'Spring Boot',
-      'PostgreSQL',
-      'React',
-      'Docker',
-      'REST APIs',
-      'UPI / Card Integrations',
-    ],
+      'Designed and built from concept to App Store release; architected a scalable MVVM + SOLID codebase. Built a dual-circle symptom selector with AI-powered search across structured backend data, plus a multi-part AVFoundation video-recording feature with countdown, segment recording, and trim/redo editing.',
+    note: 'Private client project',
+    tech: ['Swift', 'SwiftUI', 'AVFoundation', 'MVVM', 'RealityKit', 'Blender'],
     metrics: [
-      { label: 'PROTOCOLS', value: 'UPI & Cards' },
-      { label: 'BACKEND', value: 'Spring Boot + Node' },
-      { label: 'DATABASE', value: 'ACID PostgreSQL' },
+      { label: 'SEARCH', value: 'AI-Powered Symptom Search' },
+      { label: 'UI', value: 'Custom Dual-Geometry Component' },
+      { label: 'OWNERSHIP', value: 'Concept → Release' },
+    ],
+  },
+  {
+    number: '05',
+    title: 'Party Companion',
+    category: 'SOCIAL / PARTY GAMES APP',
+    description:
+      'A party games and tools app with six built-in games (Pictionary, Dumb Charades, Never Have I Ever, Would You Rather, Truth or Dare, Heads Up) plus utilities like a dice roller, timer, coin flip, and a smart team generator that parses an uploaded PDF or Excel file of names to auto-split teams. Designed solo in Figma and built end-to-end as Founder/CPO of UV Apps.',
+    link: 'https://apps.apple.com/us/app/party-companion/id6756276508',
+    linkLabel: 'VIEW ON APP STORE',
+    tech: ['Flutter', 'Supabase', 'Lottie', '3D Animations', 'PDF/Excel Parsing'],
+    metrics: [
+      { label: 'GAMES', value: '6 Built-In Games' },
+      { label: 'TEAMS', value: 'PDF/Excel-Driven Generation' },
+      { label: 'UI', value: 'Lottie + 3D Animated' },
+    ],
+  },
+  {
+    number: '06',
+    title: 'Conquer',
+    category: 'TRAVEL & EXPLORATION APP',
+    description:
+      "A travel-tracking app built around an interactive 3D globe where users drop pins on places they've visited, attach up to 3 photos and 2 videos per location, collect country stamps in a passport screen, and unlock achievements based on travel history. Designed solo in Figma and built end-to-end as Founder/CPO of UV Apps.",
+    note: 'Not yet published',
+    tech: ['Flutter', 'Supabase', 'MapKit', 'Mapbox'],
+    metrics: [
+      { label: 'GLOBE', value: 'Interactive 3D Pin-Based Map' },
+      { label: 'PASSPORT', value: 'Gamified Stamp System' },
+      { label: 'ACHIEVEMENTS', value: 'Tied to Travel Activity' },
     ],
   },
 ];
@@ -264,16 +257,25 @@ export const ProjectsSection: React.FC = () => {
                       ))}
                     </div>
 
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center space-x-3 px-6 py-3.5 border border-[#8C6D4F] bg-[#16120E] hover:border-[#D4AF37] hover:bg-[#D4AF37] text-[#EAD8C7] hover:text-black text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      <span>VIEW ON GITHUB</span>
-                      <span className="text-xs">↗</span>
-                    </a>
+                    {project.link ? (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center space-x-3 px-6 py-3.5 border border-[#8C6D4F] bg-[#16120E] hover:border-[#D4AF37] hover:bg-[#D4AF37] text-[#EAD8C7] hover:text-black text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      >
+                        <span>{project.linkLabel ?? 'VIEW PROJECT'}</span>
+                        <span className="text-xs">↗</span>
+                      </a>
+                    ) : project.note ? (
+                      <div
+                        className="inline-flex items-center justify-center px-6 py-3.5 border border-[#8C6D4F]/30 text-[#8C6D4F] text-[11px] font-medium tracking-[0.24em] uppercase"
+                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      >
+                        <span>{project.note}</span>
+                      </div>
+                    ) : null}
                   </div>
 
                 </div>

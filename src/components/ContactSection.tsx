@@ -2,13 +2,36 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeajwjvb';
+
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setSending(true);
+    setError(false);
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSent(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -68,6 +91,37 @@ export const ContactSection: React.FC = () => {
               >
                 Have an ambitious system to architect, an engineering opportunity, or a collaborative inquiry? Send a direct dispatch below.
               </p>
+
+              {/* Direct Contact Links */}
+              <div className="mt-8 flex flex-col gap-3">
+                <a
+                  href="mailto:amnamubashar29@gmail.com"
+                  className="text-xs sm:text-[13px] font-light text-[#E8DFD8] hover:text-[#D4AF37] transition-colors"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  amnamubashar29@gmail.com
+                </a>
+                <div className="flex items-center gap-5">
+                  <a
+                    href="https://github.com/Amna29Mubashar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-medium tracking-[0.22em] uppercase text-[#8C6D4F] hover:text-[#D4AF37] transition-colors"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/amna-mubashar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-medium tracking-[0.22em] uppercase text-[#8C6D4F] hover:text-[#D4AF37] transition-colors"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    LinkedIn
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -152,11 +206,21 @@ export const ContactSection: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 border border-[#8C6D4F]/50 bg-[#14100D] hover:border-[#D4AF37] hover:bg-[#1A1510] text-[#E8DFD8] hover:text-[#F7E7C4] text-xs font-medium tracking-[0.25em] uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                  disabled={sending}
+                  className="w-full py-3.5 border border-[#8C6D4F]/50 bg-[#14100D] hover:border-[#D4AF37] hover:bg-[#1A1510] text-[#E8DFD8] hover:text-[#F7E7C4] text-xs font-medium tracking-[0.25em] uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
-                  EXECUTE DISPATCH ↗
+                  {sending ? 'TRANSMITTING...' : 'EXECUTE DISPATCH ↗'}
                 </button>
+
+                {error && (
+                  <p
+                    className="text-xs text-[#D46B5C] text-center"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    Transmission failed. Please try again or email directly.
+                  </p>
+                )}
 
               </form>
             )}

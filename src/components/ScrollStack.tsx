@@ -211,6 +211,27 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     return lenis;
   }, [handleScroll]);
 
+  const measurePositions = useCallback(() => {
+    const cards = cardsRef.current;
+    if (!cards.length) return;
+
+    // Record natural top positions against the real, currently-settled layout.
+    initialTopsRef.current = cards.map((card) => {
+      const rect = card.getBoundingClientRect();
+      return rect.top + window.scrollY;
+    });
+
+    const endElement = useWindowScroll
+      ? (document.querySelector('.scroll-stack-end') as HTMLElement)
+      : (scrollerRef.current?.querySelector('.scroll-stack-end') as HTMLElement);
+    endElementTopRef.current = endElement
+      ? endElement.getBoundingClientRect().top + window.scrollY
+      : 0;
+
+    lastTransformsRef.current.clear();
+    updateCardTransforms();
+  }, [useWindowScroll, updateCardTransforms]);
+
   useLayoutEffect(() => {
     const cards = Array.from(
       document.querySelectorAll('.scroll-stack-card')
@@ -232,26 +253,33 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       card.style.perspective = '1000px';
     });
 
-    // Record static natural top positions after margins are applied
-    initialTopsRef.current = cards.map((card) => {
-      const rect = card.getBoundingClientRect();
-      return rect.top + window.scrollY;
-    });
-
-    const endElement = useWindowScroll
-      ? (document.querySelector('.scroll-stack-end') as HTMLElement)
-      : (scrollerRef.current?.querySelector('.scroll-stack-end') as HTMLElement);
-    endElementTopRef.current = endElement
-      ? endElement.getBoundingClientRect().top + window.scrollY
-      : 0;
-
+    measurePositions();
     setupLenis();
-    updateCardTransforms();
+
+    // Card positions drift after mount: web fonts swap in (font-display: swap
+    // on the huge Bebas Neue/Montserrat headings reflows everything below),
+    // images finish decoding, and iOS Safari recalculates 100vh once the
+    // address bar settles. Re-measure once each of those has had a chance to
+    // land, instead of trusting the single synchronous measurement at mount.
+    let resizeFrame: number | null = null;
+    const handleResize = () => {
+      if (resizeFrame) cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(measurePositions);
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    window.addEventListener('load', measurePositions);
+    document.fonts?.ready?.then(measurePositions);
 
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      if (resizeFrame) cancelAnimationFrame(resizeFrame);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+      window.removeEventListener('load', measurePositions);
       if (lenisRef.current) {
         lenisRef.current.destroy();
       }
@@ -274,6 +302,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     onStackComplete,
     setupLenis,
     updateCardTransforms,
+    measurePositions,
   ]);
 
   return (

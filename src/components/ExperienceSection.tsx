@@ -39,13 +39,6 @@ const journey: RouteStop[] = [
     organization: 'FIVERR (REMOTE)',
     description: 'Developed iOS applications using Swift and Objective-C for freelance clients.',
   },
-  {
-    id: '05',
-    year: 'EDUCATION',
-    title: 'B.S. COMPUTER SCIENCE',
-    organization: 'NATIONAL UNIVERSITY OF COMPUTER & EMERGING SCIENCES',
-    description: 'Bachelor of Computer Science, foundation for a career spanning iOS, Flutter, and full-stack product engineering.',
-  },
 ];
 
 export const ExperienceSection: React.FC = () => {

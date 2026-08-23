@@ -36,7 +36,8 @@ const projects: Project[] = [
     category: 'EVENT MANAGEMENT APP / iOS',
     description:
       'Large-scale offline-first app for international events with tens of thousands of attendees. Designed a Realm-based persistence and sync system with Operation Queues for background sync and local-first UI; migrated networking to a custom URLSession/Codable layer; built QR check-in and badge generation.',
-    note: 'Available on the App Store',
+    link: 'https://apps.apple.com/us/app/expo-pass/id921625648',
+    linkLabel: 'VIEW ON APP STORE',
     tech: ['Swift', 'Realm', 'URLSession', 'Codable', 'Stripe SDK', 'AWS Amplify', 'Firebase', 'Firebase Crashlytics'],
     metrics: [
       { label: 'SCALE', value: '10,000s of Attendees' },
